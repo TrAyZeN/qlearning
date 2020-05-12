@@ -6,29 +6,36 @@
 QTable *init_qtable(STATE state_number, ACTION action_number)
 {
 	STATE s;
-	ACTION a;
 	double **table;
-    static QTable qtable;
-
-	table = (double **) malloc(state_number * sizeof(double *));
-	if (table == NULL)
+    static QTable *qtable;
+	qtable = (QTable *) malloc(sizeof(QTable));
+	if (qtable == NULL)
 	{
 		fprintf(stderr, "Error : Failed to create qtable\n");
 		exit(EXIT_FAILURE);
 	}
 
+	qtable->state_number = state_number;
+	qtable->action_number = action_number;
+
+	qtable->table = (double **) malloc(state_number * sizeof(double *));
+	if (qtable->table == NULL)
+	{
+		fprintf(stderr, "Error : Failed to create table\n");
+		exit(EXIT_FAILURE);
+	}
+
 	for (s = 0; s < state_number; s++)
 	{
-		table[s] = (double *) calloc(action_number, sizeof(double));
-		if (table[s] == NULL)
+		qtable->table[s] = (double *) calloc(action_number, sizeof(double));
+		if (qtable->table[s] == NULL)
 		{
-			fprintf(stderr, "Error : failed to create qtable row\n");
+			fprintf(stderr, "Error : failed to create table row\n");
 			exit(EXIT_FAILURE);
 		}
 	}
 
-    qtable = (QTable) { table, state_number, action_number };
-	return &qtable;
+	return qtable;
 }
 
 void destroy_qtable(QTable *qtable)
@@ -82,18 +89,20 @@ void _verify_action(const QTable *qtable, STATE a)
 	}
 }
 
-void save_qtable(QTable *qtable, const char *filePath)
+void save_qtable(QTable *qtable, const char *file_path)
 {
 	STATE s;
 	ACTION a;
 	FILE *f;
 
-	f = fopen(filePath, "w");
+	f = fopen(file_path, "w");
 	if (f == NULL)
 	{
-		fprintf(stderr, "Error : Failed to open file %s", filePath);
+		fprintf(stderr, "Error : Failed to open file %s", file_path);
 		exit(EXIT_FAILURE);
 	}
+
+	fprintf(f, "%d %d\n", qtable->state_number, qtable->action_number);
 
 	for (s = 0; s < qtable->state_number; s++)
 	{
@@ -106,7 +115,29 @@ void save_qtable(QTable *qtable, const char *filePath)
 	fclose(f);
 }
 
-void load_qtable(const char *filePath)
+QTable *load_qtable(const char *file_path)
 {
-	
+	STATE s;
+	ACTION a;
+	static QTable *qtable;
+	FILE *f;
+
+	f = fopen(file_path, "r");
+	if (f == NULL)
+	{
+		fprintf(stderr, "Error : Failed to open file %s", file_path);
+		exit(EXIT_FAILURE);
+	}
+
+	fscanf(f, "%d %d", &s, &a);
+	qtable = init_qtable(s, a);
+
+	for (s = 0; s < qtable->state_number; s++)
+	{
+		for (a = 0; a < qtable->action_number; a++)
+			fscanf(f, "%lf", &qtable->table[s][a]);
+	}
+
+	fclose(f);
+	return qtable;
 }
