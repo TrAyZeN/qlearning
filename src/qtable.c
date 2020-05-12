@@ -19,16 +19,12 @@ QTable *init_qtable(STATE state_number, ACTION action_number)
 
 	for (s = 0; s < state_number; s++)
 	{
-		table[s] = (double *) malloc(action_number * sizeof(double));
+		table[s] = (double *) calloc(action_number, sizeof(double));
 		if (table[s] == NULL)
 		{
 			fprintf(stderr, "Error : failed to create qtable row\n");
 			exit(EXIT_FAILURE);
 		}
-
-		//Set all values of the qtable to 0.0
-		for (a = 0; a < action_number; a++)
-			table[s][a] = 0.0;
 	}
 
     qtable = (QTable) { table, state_number, action_number };
