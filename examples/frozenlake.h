@@ -12,19 +12,19 @@
 #define G 'G' // Goal, where the frisbee is located
 
 static const char grid[GRID_HEIGHT][GRID_WIDTH] = {
-	{S, F, F, F, F, F, F, F},
-	{F, F, F, F, F, F, F, F},
-	{F, F, F, H, F, F, F, F},
-	{F, F, F, F, F, H, F, F},
-	{F, F, F, H, F, F, F, F},
-	{F, H, H, F, F, F, H, F},
-	{F, H, F, F, H, F, H, F},
-	{F, F, F, H, F, F, F, G}
+    {S, F, F, F, F, F, F, F},
+    {F, F, F, F, F, F, F, F},
+    {F, F, F, H, F, F, F, F},
+    {F, F, F, F, F, H, F, F},
+    {F, F, F, H, F, F, F, F},
+    {F, H, H, F, F, F, H, F},
+    {F, H, F, F, H, F, H, F},
+    {F, F, F, H, F, F, F, G}
 };
 
 typedef struct state {
-	int x;
-	int y;
+    int x;
+    int y;
 } State;
 
 unsigned int to_index(const State *state);
@@ -34,10 +34,10 @@ unsigned int to_index(const State *state);
 #define ACTION_NUMBER 4
 
 typedef enum action {
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
 } Action;
 
 bool is_action_valid(const State *s, Action a);
