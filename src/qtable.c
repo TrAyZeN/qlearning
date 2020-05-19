@@ -6,7 +6,6 @@
 QTable *init_qtable(STATE state_number, ACTION action_number)
 {
     STATE s;
-    double **table;
     static QTable *qtable;
     qtable = (QTable *) malloc(sizeof(QTable));
     if (qtable == NULL)
