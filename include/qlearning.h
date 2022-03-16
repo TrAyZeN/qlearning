@@ -15,6 +15,7 @@ typedef struct hyperParameters {
 ACTION choose_random_action(const QTable *qtable);
 ACTION choose_best_action(const QTable *qtable, STATE s);
 
-void udpate_qtable(QTable *qtable, STATE s, ACTION a, STATE new_s, HyperParameters *hp, double reward);
+void udpate_qtable(QTable *qtable, STATE s, ACTION a, STATE new_s,
+                   const HyperParameters *hp, double reward);
 
 #endif

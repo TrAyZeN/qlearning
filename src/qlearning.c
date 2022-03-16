@@ -28,7 +28,8 @@ ACTION choose_best_action(const QTable *qtable, STATE s)
     return best_action;
 }
 
-void udpate_qtable(QTable *qtable, STATE s, ACTION a, STATE new_s, HyperParameters *hp, double reward)
+void udpate_qtable(QTable *qtable, STATE s, ACTION a, STATE new_s,
+                   const HyperParameters *hp, double reward)
 {
     qtable->table[s][a] = qtable->table[s][a]
         + hp->alpha * (reward + hp->gamma * max_Q(qtable, new_s) - qtable->table[s][a]);
