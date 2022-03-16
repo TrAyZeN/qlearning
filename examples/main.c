@@ -4,7 +4,7 @@
 #include "utils.h"
 #include <stdio.h>
 
-int main()
+int main(void)
 {
     int episode, step;
 
@@ -16,8 +16,8 @@ int main()
     hp.alpha = 0.1;
     hp.gamma = 0.1;
 
-    // QTable *qtable = init_qtable(GRID_WIDTH * GRID_HEIGHT, ACTION_NUMBER);
-    QTable *qtable = load_qtable("qtable");
+    QTable *qtable = init_qtable(GRID_WIDTH * GRID_HEIGHT, ACTION_NUMBER);
+    /* QTable *qtable = load_qtable("qtable"); */
     State state, next_state;
     Action action;
 
@@ -47,7 +47,7 @@ int main()
 
             display_environment(&state);
             move_cursor_up(GRID_HEIGHT);
-            // sleep_ms(25);
+            sleep_ms(25);
         }
 
         hp.epsilon -= hp.epsilon_rate;
