@@ -3,6 +3,9 @@
 
 #include "qtable.h"
 
+static void verify_state(const QTable *qtable, STATE s);
+static void verify_action(const QTable *qtable, STATE a);
+
 QTable *init_qtable(STATE state_number, ACTION action_number)
 {
     STATE s;
@@ -50,15 +53,15 @@ void destroy_qtable(QTable *qtable)
 
 double Q(const QTable *qtable, STATE s, ACTION a)
 {
-    _verify_state(qtable, s);
-    _verify_action(qtable, a);
+    verify_state(qtable, s);
+    verify_action(qtable, a);
 
     return qtable->table[s][a];
 }
 
 double max_Q(const QTable *qtable, STATE s)
 {
-    _verify_state(qtable, s);
+    verify_state(qtable, s);
 
     ACTION a;
     double max_q = qtable->table[s][0];
@@ -70,7 +73,7 @@ double max_Q(const QTable *qtable, STATE s)
     return max_q;
 }
 
-void _verify_state(const QTable *qtable, STATE s)
+static void verify_state(const QTable *qtable, STATE s)
 {
     if (s >= qtable->state_number)
     {
@@ -79,7 +82,7 @@ void _verify_state(const QTable *qtable, STATE s)
     }
 }
 
-void _verify_action(const QTable *qtable, STATE a)
+static void verify_action(const QTable *qtable, STATE a)
 {
     if (a >= qtable->action_number)
     {

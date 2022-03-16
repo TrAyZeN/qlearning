@@ -16,9 +16,6 @@ void destroy_qtable(QTable *qtable);
 double Q(const QTable *qtable, STATE s, ACTION a);
 double max_Q(const QTable *qtable, STATE s);
 
-void _verify_state(const QTable *qtable, STATE s);
-void _verify_action(const QTable *qtable, STATE a);
-
 void save_qtable(QTable *qtable, const char *filePath);
 QTable *load_qtable(const char *filePath);
 
